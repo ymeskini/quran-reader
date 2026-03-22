@@ -1,18 +1,9 @@
-import { Database } from "bun:sqlite";
 import { mkdir, cp } from "node:fs/promises";
 
 import { SURAH_NAMES } from "./api/surah-names";
+import { linesDb, wordsDb, getPageLines, getWords } from "./api/db";
 
 const OUT = "dist";
-const linesDb = new Database("api/qpc-v2-15-lines.db", { readonly: true });
-const wordsDb = new Database("api/qpc-v2.db", { readonly: true });
-
-const getPageLines = linesDb.prepare(
-  "SELECT line_number, line_type, is_centered, first_word_id, last_word_id, surah_number FROM pages WHERE page_number = ? ORDER BY line_number",
-);
-const getWords = wordsDb.prepare(
-  "SELECT id, text, location FROM words WHERE id BETWEEN ? AND ? ORDER BY id",
-);
 
 function getPageData(pageNumber: number) {
   const lines = getPageLines.all(pageNumber) as any[];
