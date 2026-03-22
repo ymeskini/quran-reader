@@ -7,6 +7,19 @@
   flex-direction: column;
 }
 
+@media (max-height: 900px) {
+  .page {
+    min-height: 0;
+    flex: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .page {
+    padding: 0 var(--space-3);
+  }
+}
+
 .loading {
   display: flex;
   justify-content: center;
