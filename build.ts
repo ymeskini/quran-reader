@@ -1,5 +1,6 @@
 import { Database } from "bun:sqlite";
 import { mkdir, cp } from "node:fs/promises";
+
 import { SURAH_NAMES } from "./api/surah-names";
 
 const OUT = "dist";
@@ -22,18 +23,27 @@ function getPageData(pageNumber: number) {
         type: "surah_name",
         centered: true,
         surahNumber: line.surah_number,
-        surahName: SURAH_NAMES[line.surah_number] || `سورة ${line.surah_number}`,
+        surahName:
+          SURAH_NAMES[line.surah_number] || `سورة ${line.surah_number}`,
       };
     }
     if (line.line_type === "basmallah") {
-      return { lineNumber: line.line_number, type: "basmallah", centered: true };
+      return {
+        lineNumber: line.line_number,
+        type: "basmallah",
+        centered: true,
+      };
     }
     const words = getWords.all(line.first_word_id, line.last_word_id) as any[];
     return {
       lineNumber: line.line_number,
       type: "ayah",
       centered: !!line.is_centered,
-      words: words.map((w) => ({ id: w.id, text: w.text, location: w.location })),
+      words: words.map((w) => ({
+        id: w.id,
+        text: w.text,
+        location: w.location,
+      })),
     };
   });
 }
@@ -60,7 +70,9 @@ const cssName = cssFile ? cssFile.path.split("/").pop() : null;
 
 // 2. Generate index.html
 console.log("Generating index.html...");
-const cssLink = cssName ? `<link rel="stylesheet" href="/assets/${cssName}">` : "";
+const cssLink = cssName
+  ? `<link rel="stylesheet" href="/assets/${cssName}">`
+  : "";
 await Bun.write(
   `${OUT}/index.html`,
   `<!DOCTYPE html>

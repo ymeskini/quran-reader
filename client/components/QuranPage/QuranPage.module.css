@@ -1,0 +1,21 @@
+.page {
+  width: 100%;
+  max-width: 500px;
+  min-height: 820px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 820px;
+  font-size: 24px;
+  color: var(--color-loading);
+}
+
+.emptyLine {
+  flex: 1;
+}

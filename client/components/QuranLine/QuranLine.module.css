@@ -1,0 +1,51 @@
+.line {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  direction: rtl;
+}
+
+.justified {
+  justify-content: space-between;
+}
+
+.centered {
+  justify-content: center;
+}
+
+.word {
+  color: var(--color-text);
+  font-size: 28px;
+  line-height: 1.8;
+  cursor: pointer;
+}
+
+.word:hover {
+  color: var(--color-primary-border);
+}
+
+.surahHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.surahName {
+  color: var(--color-text);
+  font-family: "SurahNameV2", sans-serif;
+  font-size: 64px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.basmallah {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  font-family: system-ui, sans-serif;
+  font-size: 24px;
+  color: var(--color-text);
+}

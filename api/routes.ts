@@ -1,4 +1,4 @@
-import { getPageLines, getWords } from "./db";
+import { getPageLines, getWords, getTafsir } from "./db";
 import { SURAH_NAMES } from "./surah-names";
 
 function getPageData(pageNumber: number) {
@@ -45,6 +45,23 @@ export const apiRoutes = {
       return Response.json({ error: "Page must be 1-604" }, { status: 400 });
     }
     return Response.json({ page: num, lines: getPageData(num) });
+  },
+  "/api/tafsir/:surah/:ayah": (req: Request & { params: { surah: string; ayah: string } }) => {
+    const surah = parseInt(req.params.surah);
+    const ayah = parseInt(req.params.ayah);
+    if (isNaN(surah) || isNaN(ayah) || surah < 1 || surah > 114 || ayah < 1) {
+      return Response.json({ error: "Invalid surah or ayah number" }, { status: 400 });
+    }
+
+    const row = getTafsir.get(`${surah}:${ayah}`) as any;
+    if (!row) {
+      return Response.json({ error: "Tafsir not found" }, { status: 404 });
+    }
+
+    return Response.json({
+      ayah_key: row.ayah_key,
+      text: row.text,
+    });
   },
   "/fonts/:file": (req: Request & { params: { file: string } }) => {
     const file = Bun.file(`public/fonts/${req.params.file}`);

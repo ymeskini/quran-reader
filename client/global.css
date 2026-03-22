@@ -1,0 +1,66 @@
+:root {
+  --color-bg: white;
+  --color-text: #1a1209;
+  --color-primary: #16213e;
+  --color-primary-border: #0f3460;
+  --color-input-text: #e0d5c1;
+  --color-loading: #e0d5c1;
+  --color-tafsir-brown: #8b5e3c;
+  --color-tafsir-blue: #2a6496;
+  --color-border-light: #e0d5c1;
+
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  font-family: system-ui, sans-serif;
+}
+
+/* Tafsir inner HTML styles - must be global since they come from API */
+.tafsir-text .ar {
+  font-size: 20px;
+  line-height: 2.2;
+  margin-bottom: var(--space-4);
+}
+
+.tafsir-text .brown {
+  color: var(--color-tafsir-brown);
+  font-weight: var(--font-weight-semibold);
+}
+
+.tafsir-text .blue {
+  color: var(--color-tafsir-blue);
+  font-weight: var(--font-weight-semibold);
+}
+
+.tafsir-text .arabic.qpc-hafs.brown {
+  font-family: "Amiri", serif;
+  color: var(--color-tafsir-brown);
+  font-weight: var(--font-weight-bold);
+}

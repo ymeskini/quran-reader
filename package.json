@@ -3,14 +3,17 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
-  "dependencies": {
-    "@tanstack/react-query": "^5.94.5",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
-  },
   "scripts": {
     "dev": "bun --hot index.ts",
     "build": "bun run build.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.94.5",
+    "bun-lightningcss": "^0.2.0",
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "^20.8.4",
