@@ -8,9 +8,17 @@ interface TafsirData {
   text: string;
 }
 
+const isDev = location.port === "3000";
+
 async function fetchTafsir(surah: number, ayah: number): Promise<TafsirData> {
-  const res = await fetch(`/api/tafsir/${surah}/${ayah}`);
-  return res.json();
+  if (isDev) {
+    const res = await fetch(`/api/tafsir/${surah}/${ayah}`);
+    return res.json();
+  }
+  const res = await fetch(`/api/tafsir/${surah}.json`);
+  const map: Record<string, string> = await res.json();
+  const ayahKey = `${surah}:${ayah}`;
+  return { ayah_key: ayahKey, text: map[ayahKey] || "" };
 }
 
 export function TafsirDrawer({
@@ -25,7 +33,7 @@ export function TafsirDrawer({
   const ayah = Number(parts[1]) || 0;
 
   const { data, isLoading } = useQuery({
-    queryKey: ["tafsir", surah, ayah],
+    queryKey: ["tafsir", surah, ayah] as const,
     queryFn: () => fetchTafsir(surah, ayah),
     enabled: !!ayahKey,
     staleTime: Infinity,

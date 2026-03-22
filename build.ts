@@ -1,7 +1,7 @@
 import { mkdir, cp } from "node:fs/promises";
 
 import { SURAH_NAMES } from "./api/surah-names";
-import { linesDb, wordsDb, getPageLines, getWords } from "./api/db";
+import { linesDb, wordsDb, getPageLines, getWords, tafsirDb, getTafsir } from "./api/db";
 
 const OUT = "dist";
 
@@ -89,11 +89,28 @@ for (let i = 1; i <= 604; i++) {
   await Bun.write(`${OUT}/api/page/${i}.json`, JSON.stringify(data));
 }
 
-// 4. Copy fonts
+// 4. Generate static JSON for tafsir
+console.log("Generating tafsir data...");
+const allTafsir = tafsirDb.prepare("SELECT ayah_key, text FROM tafsir").all() as { ayah_key: string; text: string }[];
+const tafsirBySurah = new Map<number, { ayah_key: string; text: string }[]>();
+for (const row of allTafsir) {
+  const surah = Number(row.ayah_key.split(":")[0]);
+  if (!tafsirBySurah.has(surah)) tafsirBySurah.set(surah, []);
+  tafsirBySurah.get(surah)!.push(row);
+}
+await mkdir(`${OUT}/api/tafsir`, { recursive: true });
+for (const [surah, ayahs] of tafsirBySurah) {
+  const map: Record<string, string> = {};
+  for (const a of ayahs) map[a.ayah_key] = a.text;
+  await Bun.write(`${OUT}/api/tafsir/${surah}.json`, JSON.stringify(map));
+}
+
+// 5. Copy fonts
 console.log("Copying fonts...");
 await cp("public/fonts", `${OUT}/fonts`, { recursive: true });
 
 linesDb.close();
 wordsDb.close();
+tafsirDb.close();
 
 console.log(`Build complete → ${OUT}/`);
