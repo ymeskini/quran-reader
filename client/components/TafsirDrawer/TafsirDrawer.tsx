@@ -3,18 +3,13 @@ import { X } from "lucide-react";
 import { Drawer } from "vaul";
 import styles from "./TafsirDrawer.module.css";
 
-const isDev = location.port === "3000";
-
 interface TafsirData {
   ayah_key: string;
   text: string;
 }
 
 async function fetchTafsir(surah: number, ayah: number): Promise<TafsirData> {
-  const url = isDev
-    ? `/api/tafsir/${surah}/${ayah}`
-    : `/api/tafsir/${surah}/${ayah}.json`;
-  const res = await fetch(url);
+  const res = await fetch(`/api/tafsir/${surah}/${ayah}`);
   return res.json();
 }
 
