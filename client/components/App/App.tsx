@@ -30,6 +30,7 @@ export function App() {
         <QuranPage pageNum={page} onWordClick={setTafsirAyah} />
         <TafsirDrawer
           ayahKey={tafsirAyah}
+          page={page}
           onClose={() => setTafsirAyah(null)}
         />
       </main>

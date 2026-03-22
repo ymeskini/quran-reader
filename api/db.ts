@@ -16,3 +16,22 @@ export const tafsirDb = new Database(new URL("data/tafsir-as-saadi.db", import.m
 export const getTafsir = tafsirDb.prepare(
   "SELECT ayah_key, text FROM tafsir WHERE ayah_key = ?",
 );
+
+export function getPageTafsir(pageNumber: number): Record<string, string> {
+  const lines = getPageLines.all(pageNumber) as any[];
+  const ayahKeys = new Set<string>();
+  for (const line of lines) {
+    if (line.line_type !== "ayah") continue;
+    const words = getWords.all(line.first_word_id, line.last_word_id) as any[];
+    for (const w of words) {
+      const parts = w.location.split(":");
+      ayahKeys.add(`${parts[0]}:${parts[1]}`);
+    }
+  }
+  const map: Record<string, string> = {};
+  for (const key of ayahKeys) {
+    const row = getTafsir.get(key) as any;
+    if (row) map[row.ayah_key] = row.text;
+  }
+  return map;
+}
