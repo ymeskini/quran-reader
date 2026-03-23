@@ -20,7 +20,7 @@
   cursor: pointer;
 }
 
-.word:hover {
+.wordHighlight {
   color: var(--color-primary-border);
 }
 

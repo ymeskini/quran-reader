@@ -7,10 +7,14 @@ export function QuranLine({
   line,
   pageNum,
   onWordClick,
+  hoveredAyah,
+  onAyahHover,
 }: {
   line: Line;
   pageNum: number;
   onWordClick?: (ayahKey: string) => void;
+  hoveredAyah?: string | null;
+  onAyahHover?: (ayahKey: string | null) => void;
 }) {
   if (line.type === "surah_name") {
     const surahNum = (line as SurahNameLine).surahNumber;
@@ -43,10 +47,12 @@ export function QuranLine({
         return (
           <span
             key={word.id}
-            className={styles.word}
+            className={`${styles.word} ${hoveredAyah === ayahKey ? styles.wordHighlight : ""}`}
             style={{ fontFamily: font }}
             title={word.location}
             onClick={() => onWordClick?.(ayahKey)}
+            onMouseEnter={() => onAyahHover?.(ayahKey)}
+            onMouseLeave={() => onAyahHover?.(null)}
           >
             {word.text}
           </span>

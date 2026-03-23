@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import type { PageData } from "../../types";
@@ -50,6 +50,8 @@ export function QuranPage({
     }
   }, [pageNum, queryClient]);
 
+  const [hoveredAyah, setHoveredAyah] = useState<string | null>(null);
+
   if (isLoading || !data) return <div className={styles.loading}>Loading...</div>;
 
   const totalLines = 15;
@@ -57,7 +59,7 @@ export function QuranPage({
   return (
     <div className={styles.page}>
       {data.lines.map((line) => (
-        <QuranLine key={line.lineNumber} line={line} pageNum={pageNum} onWordClick={onWordClick} />
+        <QuranLine key={line.lineNumber} line={line} pageNum={pageNum} onWordClick={onWordClick} hoveredAyah={hoveredAyah} onAyahHover={setHoveredAyah} />
       ))}
       {Array.from({ length: totalLines - data.lines.length }).map((_, i) => (
         <div key={`empty-${i}`} className={styles.emptyLine} />

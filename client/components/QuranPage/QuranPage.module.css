@@ -1,6 +1,5 @@
 .page {
   width: 100%;
-  max-width: 500px;
   min-height: 820px;
   border-radius: var(--radius-sm);
   display: flex;

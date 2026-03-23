@@ -2,8 +2,84 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  gap: var(--space-8);
+  flex-direction: row-reverse;
   min-height: 100%;
   padding: var(--space-4) 0;
+}
+
+.arrowButton {
+  display: none;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-secondary, #888);
+  cursor: pointer;
+  padding: 1rem 0.5rem;
+  user-select: none;
+  transition: color 0.15s;
+  height: 36px;
+  width: 36px;
+}
+
+.arrowButton:hover {
+  color: var(--text-primary, #333);
+}
+
+.arrowRight {
+  right: calc(50% - 300px);
+}
+
+.arrowLeft {
+  left: calc(50% - 300px);
+}
+
+@media (min-width: 700px) {
+  .arrowButton {
+    display: block;
+  }
+}
+
+.carousel {
+  overflow: hidden;
+  width: 100%;
+  max-width: 500px;
+}
+
+.carouselContainer {
+  display: flex;
+}
+
+.carouselSlide {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.placeholder {
+  width: 100%;
+  min-height: 820px;
+}
+
+@media (max-height: 900px) {
+  .placeholder {
+    min-height: 0;
+    flex: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .carousel {
+    max-width: 100%;
+  }
+}
+
+.pageNumber {
+  position: absolute;
+  bottom: var(--space-4);
+  text-align: center;
+  right: 0;
+  left: 0;
 }
